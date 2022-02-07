@@ -1,37 +1,52 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import styles from './MediaPlusTest.module.css'
+import {useDispatch, useSelector} from "react-redux";
+import {
+    changeHeaderCheckboxAC,
+    changeHeaderValueAC, changeImageCheckboxAC, changeImageValueAC,
+    changePostTextValueAC,
+    changeTitleAC, DataType, getDataFromLocalStorageAC
+} from "./redux/settingsReducer";
+import {AppRootStateType} from "./redux/store";
+import {InputForm} from "./components/InputForm/InputForm";
 
 function MediaPlusTest() {
+    const dispatch = useDispatch()
+
+
+    const allData = useSelector<AppRootStateType, DataType>(state => state.settings)
+    let {title, postText, header, image, isHeader, isImage} = allData
+
 
     useEffect(() => {
-        let titleValue = localStorage.getItem('titleValue')
-        titleValue && setTitleValue(titleValue)
+        let dataFromLS = localStorage.getItem('data')
+        if (dataFromLS) {
+            dispatch(getDataFromLocalStorageAC(JSON.parse(dataFromLS)))
+        }
     }, [])
 
-// accept=".jpg, .jpeg, .png"
-    const [titleValue, setTitleValue] = useState<string>('')
-    const [postTextValue, setPostTextValue] = useState<string>('')
-    const [headerValue, setHeaderValue] = useState<string>('Header')
-    const [isHeader, setIsHeader] = useState<boolean>(false)
-    const [isImage, setIsImage] = useState<boolean>(false)
-    const [image, setImage] = useState<string>()
+    // accept=".jpg, .jpeg, .png"
 
-
-    const titleValueHandler = (e: React.ChangeEvent<HTMLInputElement>) => setTitleValue(e.currentTarget.value)
-    const postTextValueHandler = (e: React.ChangeEvent<HTMLTextAreaElement>) => setPostTextValue(e.currentTarget.value)
-    const headerValueHandler = (e: React.ChangeEvent<HTMLInputElement>) => setHeaderValue(e.currentTarget.value)
-    const headerCheckbox = (e: React.ChangeEvent<HTMLInputElement>) => setIsHeader(e.currentTarget.checked)
-    const imageCheckbox = (e: React.ChangeEvent<HTMLInputElement>) => setIsImage(e.currentTarget.checked)
+    const titleValueHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+        dispatch(changeTitleAC(e.currentTarget.value))
+    }
+    const postTextValueHandler = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+        dispatch(changePostTextValueAC(e.currentTarget.value))
+    }
+    const headerValueHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+        dispatch(changeHeaderValueAC(e.currentTarget.value))
+    }
+    const imageValueHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+        dispatch(changeImageValueAC(URL.createObjectURL(e.target.files![0])))
+    }
+    const changeHeaderCheckbox = (e: React.ChangeEvent<HTMLInputElement>) => {
+        dispatch(changeHeaderCheckboxAC())
+    }
+    const changeImageCheckbox = (e: React.ChangeEvent<HTMLInputElement>) => {
+        dispatch(changeImageCheckboxAC())
+    }
     const saveData = () => {
-        localStorage.setItem('titleValue', titleValue)
-    }
-    const resetData = () => {
-        setTitleValue('')
-    }
-
-    const handlerIMG = (event: any) => {
-        console.log(event.target.files[0])
-        setImage(URL.createObjectURL(event.target.files[0]))
+        localStorage.setItem('data', JSON.stringify(allData))
     }
 
     return (
@@ -39,28 +54,27 @@ function MediaPlusTest() {
             <div className={styles.settingsWrapper}>
                 <div className={styles.settingsBlock}>
                     <h2>Settings</h2>
-                    <input value={titleValue} onChange={titleValueHandler}/>
-                    <textarea value={postTextValue} onChange={postTextValueHandler}/>
+                    <InputForm value={title} onChange={titleValueHandler}/>
+                    <textarea value={postText} onChange={postTextValueHandler}/>
                     <div>
-                        <input type='checkbox' checked={isHeader} onChange={headerCheckbox}/>
+                        <InputForm type='checkbox' value={isHeader} onChange={changeHeaderCheckbox}/>
                         <span>Header</span>
                     </div>
-                    {isHeader && <input value={headerValue} onChange={headerValueHandler}/>}
+                    {isHeader && <InputForm value={header} onChange={headerValueHandler}/>}
                     <div>
-                        <input type='checkbox' checked={isImage} onChange={imageCheckbox}/>
+                        <InputForm type='checkbox' value={isImage} onChange={changeImageCheckbox}/>
                         <span>Image</span>
                     </div>
-                    {isImage && <input type='file' onChange={handlerIMG}/>}
+                    {isImage && <InputForm type='file' onChange={imageValueHandler}/>}
                     <button onClick={saveData}>Save</button>
-                    <button onClick={resetData}>Reset</button>
                 </div>
             </div>
             <div className={styles.previewWrapper}>
                 <div className={styles.previewBlock}>
-                    {isHeader && headerValue}
-                    {titleValue}
-                    {postTextValue}
-                    {isImage && <img src={image}/>}
+                    {isHeader && header}
+                    <span>{title}</span>
+                    <span>{postText}</span>
+                    {isImage && <img src={image} alt='uploaded img'/>}
                 </div>
             </div>
         </div>
