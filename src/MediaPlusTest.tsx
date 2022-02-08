@@ -9,7 +9,7 @@ const MediaPlusTest = () => {
     const dispatch = useDispatch()
 
     const allData = useSelector<AppRootStateType, DataType>(state => state.settings)
-    let {title, postText, header, image, isHeader, isImage} = allData
+    let {title, postText, header, image, isHeader, isImage, isDrag} = allData
 
     useEffect(() => {
         let dataFromLS = localStorage.getItem('data')
@@ -30,6 +30,7 @@ const MediaPlusTest = () => {
                       postText={postText}
                       isHeader={isHeader}
                       isImage={isImage}
+                      isDrag={isDrag}
             />
             <div className={styles.previewWrapper}>
                 {isHeader && header
@@ -37,7 +38,6 @@ const MediaPlusTest = () => {
                         <span>{header}</span>
                     </div>}
                 <div className={classForPreviewBlock}>
-
                     <h3>{title}</h3>
                     <span>{postText}</span>
                     {isImage && image

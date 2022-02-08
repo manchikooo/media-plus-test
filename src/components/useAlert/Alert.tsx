@@ -13,8 +13,8 @@ const Alert = (props: AlertPropsType) => {
     useEffect(() => {
         console.log(alert.current?.style);
         console.log(props.alertX, props.alertY);
-        alert.current!.style.left = `${props.alertX }px`;
-        alert.current!.style.top = `${props.alertY}px`;
+        alert.current!.style.left = `${props.alertX / 2}px`;
+        alert.current!.style.top = `${props.alertY + 40}px`;
     }, [props.alertX, props.alertY]);
 
     return (

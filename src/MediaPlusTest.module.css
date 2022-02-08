@@ -37,6 +37,11 @@
     margin-bottom: 15px;
 }
 
+.previewBlock span {
+    margin-bottom: 20px;
+}
+
+
 .previewBlockWithHeader {
     display: flex;
     flex-direction: column;
@@ -56,6 +61,9 @@
     margin-bottom: 15px;
 }
 
+.previewBlockWithHeader {
+    margin-bottom: 20px;
+}
 
 .headerElStyle {
     display: flex;
@@ -74,10 +82,17 @@
 }
 
 .imageWrapper {
+    width: 100%;
     display: flex;
     justify-content: center;
-    width: 100%;
+    background-size: cover;
+
+    /*width: 100%;*/
+
 }
+
 .uploadedImage {
-    width: 300px;
+    object-fit: cover;
+    width: 100%;
+    /*width: 300px;*/
 }

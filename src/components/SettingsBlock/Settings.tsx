@@ -1,4 +1,4 @@
-import React, {useRef} from 'react';
+import React from 'react';
 import styles from './Settings.module.css'
 import {InputForm} from "../InputForm/InputForm";
 import {Switch} from "@mui/material";
@@ -7,7 +7,7 @@ import {
     changeImageValueAC,
     changePostTextValueAC,
     changeTitleAC,
-    DataType,
+    DataType, toggleDragAC,
     toggleHeaderCheckboxAC,
     toggleImageCheckboxAC
 } from "../../redux/settingsReducer";
@@ -21,11 +21,11 @@ type SettingsPropsType = {
     postText: string
     isHeader: boolean
     isImage: boolean
+    isDrag: boolean
 }
 
 export const Settings = (props: SettingsPropsType) => {
     let dispatch = useDispatch()
-    let alert = useRef<HTMLButtonElement | null>(null)
 
     const titleValueHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
         dispatch(changeTitleAC(e.currentTarget.value))
@@ -39,11 +39,24 @@ export const Settings = (props: SettingsPropsType) => {
     const imageValueHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
         dispatch(changeImageValueAC(URL.createObjectURL(e.target.files![0])))
     }
-    const changeHeaderCheckbox = (e: React.ChangeEvent<HTMLInputElement>) => {
-        dispatch(toggleHeaderCheckboxAC(e.currentTarget.checked))
+    const toggleHeaderCheckbox = () => {
+        dispatch(toggleHeaderCheckboxAC())
     }
-    const changeImageCheckbox = (e: React.ChangeEvent<HTMLInputElement>) => {
-        dispatch(toggleImageCheckboxAC(e.currentTarget.checked))
+    const toggleImageCheckbox = () => {
+        dispatch(toggleImageCheckboxAC())
+    }
+    const toggleDragStartAndOverValue = (e: React.DragEvent<HTMLDivElement>) => {
+        e.preventDefault()
+        dispatch(toggleDragAC(true))
+    }
+    const toggleDragLeaveValue = (e: React.DragEvent<HTMLDivElement>) => {
+        e.preventDefault()
+        dispatch(toggleDragAC(false))
+    }
+    const onDropHandler = (e: React.DragEvent<HTMLDivElement>) => {
+        e.preventDefault()
+        dispatch(changeImageValueAC(URL.createObjectURL(e.dataTransfer.files![0])))
+        dispatch(toggleDragAC(false))
     }
     const saveData = () => {
         localStorage.setItem('data', JSON.stringify(props.allData))
@@ -62,7 +75,7 @@ export const Settings = (props: SettingsPropsType) => {
                           value={props.postText}
                           onChange={postTextValueHandler}/>
                 <div>
-                    <Switch checked={props.isHeader} onChange={changeHeaderCheckbox}/>
+                    <Switch checked={props.isHeader} onChange={toggleHeaderCheckbox}/>
                     <span>Header</span>
                 </div>
                 {props.isHeader && <InputForm placeholder='Header'
@@ -70,10 +83,27 @@ export const Settings = (props: SettingsPropsType) => {
                                               onChange={headerValueHandler}
                 />}
                 <div>
-                    <Switch checked={props.isImage} onChange={changeImageCheckbox}/>
+                    <Switch checked={props.isImage} onChange={toggleImageCheckbox}/>
                     <span>Image</span>
                 </div>
-                {props.isImage && <input type='file' onChange={imageValueHandler}/>}
+                {props.isImage && <div className={styles.dropAreaBlock}>
+                    <input type='file' onChange={imageValueHandler}/>
+                    {props.isDrag
+                        ? <div className={styles.dropArea}
+                               onDragStart={toggleDragStartAndOverValue}
+                               onDragLeave={toggleDragLeaveValue}
+                               onDragOver={toggleDragStartAndOverValue}
+                               onDrop={onDropHandler}
+                        >Отпустите файлы, чтобы загрузить их
+                        </div>
+                        : <div className={styles.dropArea}
+                               onDragStart={toggleDragStartAndOverValue}
+                               onDragLeave={toggleDragLeaveValue}
+                               onDragOver={toggleDragStartAndOverValue}
+                        >Перетащите файлы, чтобы загрузить их
+                        </div>
+                    }
+                </div>}
                 <div>
                     {useAlert('Post saved', saveData)} {/*вызов хука useAlert. В нем же кнопка SAVE.*/}
                 </div>

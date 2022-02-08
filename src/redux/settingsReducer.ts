@@ -5,6 +5,7 @@ export type DataType = {
     image: string
     isHeader: boolean
     isImage: boolean
+    isDrag: boolean
 }
 
 let initialState: DataType = {
@@ -14,6 +15,7 @@ let initialState: DataType = {
     image: '',
     isHeader: false,
     isImage: false,
+    isDrag: false,
 }
 
 export const SettingsReducer = (state: DataType = initialState, action: ActionsType): DataType => {
@@ -36,6 +38,9 @@ export const SettingsReducer = (state: DataType = initialState, action: ActionsT
         case 'TOGGLE-IMAGE-CHECKBOX': {
             return {...state, isImage: !state.isImage}
         }
+        case 'TOGGLE-DRAG-VALUE': {
+            return {...state, isDrag: action.isDragValue}
+        }
         case 'SET-DATA-FROM-LOCALSTORAGE': {
             return {...state = action.dataFromLS}
         }
@@ -51,6 +56,7 @@ type ActionsType =
     | toggleImageCheckboxACType
     | changeImageValueACType
     | getDataFromLocalStorageACType
+    | toggleDragACType
 
 export type changeTitleACType = {
     type: 'CHANGE-TITLE-VALUE',
@@ -98,23 +104,29 @@ export const changeImageValueAC = (newImage: string): changeImageValueACType => 
 
 export type toggleHeaderCheckboxACType = {
     type: 'TOGGLE-HEADER-CHECKBOX',
-    toggleValue: boolean
 }
-export const toggleHeaderCheckboxAC = (toggleValue: boolean): toggleHeaderCheckboxACType => {
+export const toggleHeaderCheckboxAC = (): toggleHeaderCheckboxACType => {
     return {
         type: 'TOGGLE-HEADER-CHECKBOX',
-        toggleValue,
     } as const
 }
 
 export type toggleImageCheckboxACType = {
     type: 'TOGGLE-IMAGE-CHECKBOX',
-    toggleValue: boolean
 }
-export const toggleImageCheckboxAC = (toggleValue: boolean): toggleImageCheckboxACType => {
+export const toggleImageCheckboxAC = (): toggleImageCheckboxACType => {
     return {
         type: 'TOGGLE-IMAGE-CHECKBOX',
-        toggleValue,
+    } as const
+}
+export type toggleDragACType = {
+    type: 'TOGGLE-DRAG-VALUE',
+    isDragValue: boolean,
+}
+export const toggleDragAC = (isDragValue: boolean): toggleDragACType => {
+    return {
+        type: 'TOGGLE-DRAG-VALUE',
+        isDragValue
     } as const
 }
 export type getDataFromLocalStorageACType = {
