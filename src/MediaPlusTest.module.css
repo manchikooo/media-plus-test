@@ -1,5 +1,7 @@
 * {
     box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
 .MediaPlusTestPageStyle {
@@ -11,17 +13,71 @@
 
 .previewWrapper {
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     height: 100%;
     width: 50%;
-    background-color: green;
 }
 
 .previewBlock {
     display: flex;
+    flex-direction: column;
     justify-content: center;
-    width: 100%;
-    background-color: blanchedalmond;
+    width: 90%;
+    padding: 15px 20px;
+    border: 2px solid #BBBBBB;
+    border-radius: 5px;
+    max-width: 650px;
 }
 
+.previewBlock h3 {
+    font-size: 23px;
+    color: #2B2B2B;
+    margin-bottom: 15px;
+}
+
+.previewBlockWithHeader {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 90%;
+    min-height: 94px;
+    background-color: white;
+    padding: 15px 20px;
+    border: 2px solid #BBBBBB;
+    border-radius: 0 0 5px 5px;
+    max-width: 650px;
+}
+
+.previewBlockWithHeader h3 {
+    font-size: 23px;
+    color: #2B2B2B;
+    margin-bottom: 15px;
+}
+
+
+.headerElStyle {
+    display: flex;
+    justify-content: flex-start;
+    border: solid #BBBBBB;
+    border-width: 2px 2px 0;
+    border-radius: 5px 5px 0 0;
+    width: 90%;
+    max-width: 650px;
+    background-color: #BBBBBB;
+}
+
+.headerElStyle span {
+    display: inline-block;
+    padding: 10px 20px;
+}
+
+.imageWrapper {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+.uploadedImage {
+    width: 300px;
+}

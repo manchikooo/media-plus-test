@@ -5,8 +5,7 @@ import {DataType, setDataFromLocalStorageAC} from "./redux/settingsReducer";
 import {AppRootStateType} from "./redux/store";
 import {Settings} from "./components/SettingsBlock/Settings";
 
-
-function MediaPlusTest() {
+const MediaPlusTest = () => {
     const dispatch = useDispatch()
 
     const allData = useSelector<AppRootStateType, DataType>(state => state.settings)
@@ -15,10 +14,11 @@ function MediaPlusTest() {
     useEffect(() => {
         let dataFromLS = localStorage.getItem('data')
         if (dataFromLS) {
-            console.log(dataFromLS)
             dispatch(setDataFromLocalStorageAC(JSON.parse(dataFromLS)))
         }
     }, [])
+
+    const classForPreviewBlock = isHeader ? styles.previewBlockWithHeader : styles.previewBlock
 
     // accept=".jpg, .jpeg, .png"
 
@@ -32,11 +32,19 @@ function MediaPlusTest() {
                       isImage={isImage}
             />
             <div className={styles.previewWrapper}>
-                <div className={styles.previewBlock}>
-                    {isHeader && header}
-                    <span>{title}</span>
+                {isHeader && header
+                    && <div className={styles.headerElStyle}>
+                        <span>{header}</span>
+                    </div>}
+                <div className={classForPreviewBlock}>
+
+                    <h3>{title}</h3>
                     <span>{postText}</span>
-                    {isImage && image && <img src={image} alt='uploaded img'/>}
+                    {isImage && image
+                        && <div className={styles.imageWrapper}>
+                            <img className={styles.uploadedImage} src={image} alt='uploaded img'/>
+                        </div>
+                    }
                 </div>
             </div>
         </div>

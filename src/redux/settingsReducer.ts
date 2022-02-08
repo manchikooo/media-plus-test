@@ -8,8 +8,8 @@ export type DataType = {
 }
 
 let initialState: DataType = {
-    title: '',
-    postText: '',
+    title: 'Title',
+    postText: 'Some post text',
     header: 'Header',
     image: '',
     isHeader: false,

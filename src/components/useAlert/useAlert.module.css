@@ -1,0 +1,10 @@
+.alertStyle {
+    width: 150px;
+    height: 150px;
+    border-radius: 75px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    z-index: 10;
+}

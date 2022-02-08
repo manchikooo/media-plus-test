@@ -1,14 +1,18 @@
-import React from 'react';
+import React, {useRef} from 'react';
 import styles from './Settings.module.css'
 import {InputForm} from "../InputForm/InputForm";
-import {Button, Switch} from "@mui/material";
+import {Switch} from "@mui/material";
 import {
     changeHeaderValueAC,
     changeImageValueAC,
     changePostTextValueAC,
-    changeTitleAC, DataType, toggleHeaderCheckboxAC, toggleImageCheckboxAC
+    changeTitleAC,
+    DataType,
+    toggleHeaderCheckboxAC,
+    toggleImageCheckboxAC
 } from "../../redux/settingsReducer";
 import {useDispatch} from "react-redux";
+import {useAlert} from "../useAlert/useAlert";
 
 type SettingsPropsType = {
     allData: DataType
@@ -21,6 +25,7 @@ type SettingsPropsType = {
 
 export const Settings = (props: SettingsPropsType) => {
     let dispatch = useDispatch()
+    let alert = useRef<HTMLButtonElement | null>(null)
 
     const titleValueHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
         dispatch(changeTitleAC(e.currentTarget.value))
@@ -69,12 +74,9 @@ export const Settings = (props: SettingsPropsType) => {
                     <span>Image</span>
                 </div>
                 {props.isImage && <input type='file' onChange={imageValueHandler}/>}
-                <Button variant="contained"
-                        onClick={saveData}
-                        style={{marginTop: '20px'}}
-                >
-                    Save
-                </Button>
+                <div>
+                    {useAlert('Saved', saveData)} {/*вызов хука useAlert. В нем же кнопка SAVE.*/}
+                </div>
             </div>
         </div>
     );
