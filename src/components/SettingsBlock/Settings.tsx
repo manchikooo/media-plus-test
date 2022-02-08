@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './Settings.module.css'
 import {InputForm} from "../InputForm/InputForm";
-import {Switch} from "@mui/material";
+import {Button, Switch} from "@mui/material";
 import {
     changeHeaderValueAC,
     changeImageValueAC,
@@ -87,20 +87,32 @@ export const Settings = (props: SettingsPropsType) => {
                     <span>Image</span>
                 </div>
                 {props.isImage && <div className={styles.dropAreaBlock}>
-                    <input type='file' onChange={imageValueHandler}/>
+                    <Button
+                        variant="contained"
+                        component="label"
+                        style={{marginBottom: '15px'}}
+                        size='small'
+                    >
+                        Upload File
+                        <input
+                            type="file"
+                            hidden
+                            onChange={imageValueHandler}
+                        />
+                    </Button>
                     {props.isDrag
                         ? <div className={styles.dropArea}
                                onDragStart={toggleDragStartAndOverValue}
                                onDragLeave={toggleDragLeaveValue}
                                onDragOver={toggleDragStartAndOverValue}
                                onDrop={onDropHandler}
-                        >Отпустите файлы, чтобы загрузить их
+                        >Release the files to download them
                         </div>
                         : <div className={styles.dropArea}
                                onDragStart={toggleDragStartAndOverValue}
                                onDragLeave={toggleDragLeaveValue}
                                onDragOver={toggleDragStartAndOverValue}
-                        >Перетащите файлы, чтобы загрузить их
+                        >Drag and drop files to upload them
                         </div>
                     }
                 </div>}
