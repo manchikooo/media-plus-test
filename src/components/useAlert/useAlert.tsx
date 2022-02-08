@@ -14,7 +14,7 @@ export const useAlert = (alertMessage: string, saveData: () => void) => {
         setAlertOn(true);
         setTimeout(() => {
             setAlertOn(false);
-        }, 2000);
+        }, 2500);
     };
 
     return (

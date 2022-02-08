@@ -75,7 +75,7 @@ export const Settings = (props: SettingsPropsType) => {
                 </div>
                 {props.isImage && <input type='file' onChange={imageValueHandler}/>}
                 <div>
-                    {useAlert('Saved', saveData)} {/*вызов хука useAlert. В нем же кнопка SAVE.*/}
+                    {useAlert('Post saved', saveData)} {/*вызов хука useAlert. В нем же кнопка SAVE.*/}
                 </div>
             </div>
         </div>
