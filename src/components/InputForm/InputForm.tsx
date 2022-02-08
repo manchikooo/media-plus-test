@@ -1,15 +1,20 @@
 import React from 'react';
+import styles from './InputForm.module.css'
 
 type InputFormPropsType = {
-    value?: any
-    onChange: any
-    type?: string
+    value: string
+    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+    placeholder: string
 }
 
 export const InputForm = (props: InputFormPropsType) => {
     return (
         <>
-            <input value={props.value} type={props.type} onChange={props.onChange}/>
+            <input className={styles.InputFormStyle}
+                   placeholder={props.placeholder}
+                   value={props.value}
+                   onChange={props.onChange}
+            />
         </>
     );
 };

@@ -30,13 +30,13 @@ export const SettingsReducer = (state: DataType = initialState, action: ActionsT
         case 'CHANGE-IMAGE-VALUE': {
             return {...state, image: action.newImage}
         }
-        case 'CHANGE-HEADER-CHECKBOX': {
+        case 'TOGGLE-HEADER-CHECKBOX': {
             return {...state, isHeader: !state.isHeader}
         }
-        case 'CHANGE-IMAGE-CHECKBOX': {
+        case 'TOGGLE-IMAGE-CHECKBOX': {
             return {...state, isImage: !state.isImage}
         }
-        case 'GET-DATA-FROM-LOCALSTORAGE': {
+        case 'SET-DATA-FROM-LOCALSTORAGE': {
             return {...state = action.dataFromLS}
         }
         default:
@@ -46,9 +46,9 @@ export const SettingsReducer = (state: DataType = initialState, action: ActionsT
 type ActionsType =
     changeTitleACType
     | changePostTextValueACType
-    | changeHeaderCheckboxACType
+    | toggleHeaderCheckboxACType
     | changeHeaderValueACType
-    | changeImageCheckboxACType
+    | toggleImageCheckboxACType
     | changeImageValueACType
     | getDataFromLocalStorageACType
 
@@ -96,30 +96,34 @@ export const changeImageValueAC = (newImage: string): changeImageValueACType => 
     } as const
 }
 
-export type changeHeaderCheckboxACType = {
-    type: 'CHANGE-HEADER-CHECKBOX',
+export type toggleHeaderCheckboxACType = {
+    type: 'TOGGLE-HEADER-CHECKBOX',
+    toggleValue: boolean
 }
-export const changeHeaderCheckboxAC = (): changeHeaderCheckboxACType => {
+export const toggleHeaderCheckboxAC = (toggleValue: boolean): toggleHeaderCheckboxACType => {
     return {
-        type: 'CHANGE-HEADER-CHECKBOX',
+        type: 'TOGGLE-HEADER-CHECKBOX',
+        toggleValue,
     } as const
 }
 
-export type changeImageCheckboxACType = {
-    type: 'CHANGE-IMAGE-CHECKBOX',
+export type toggleImageCheckboxACType = {
+    type: 'TOGGLE-IMAGE-CHECKBOX',
+    toggleValue: boolean
 }
-export const changeImageCheckboxAC = (): changeImageCheckboxACType => {
+export const toggleImageCheckboxAC = (toggleValue: boolean): toggleImageCheckboxACType => {
     return {
-        type: 'CHANGE-IMAGE-CHECKBOX',
+        type: 'TOGGLE-IMAGE-CHECKBOX',
+        toggleValue,
     } as const
 }
 export type getDataFromLocalStorageACType = {
-    type: 'GET-DATA-FROM-LOCALSTORAGE',
+    type: 'SET-DATA-FROM-LOCALSTORAGE',
     dataFromLS: DataType
 }
-export const getDataFromLocalStorageAC = (dataFromLS: DataType): getDataFromLocalStorageACType => {
+export const setDataFromLocalStorageAC = (dataFromLS: DataType): getDataFromLocalStorageACType => {
     return {
-        type: 'GET-DATA-FROM-LOCALSTORAGE',
+        type: 'SET-DATA-FROM-LOCALSTORAGE',
         dataFromLS
     } as const
 }
