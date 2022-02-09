@@ -1,5 +1,8 @@
 import React from 'react';
 import styles from './Preview.module.css'
+import {UploadedImage} from "./UploadedImage/UploadedImage";
+import {PreviewInfo} from "./PreviewInfo/PreviewInfo";
+import {Header} from "./Header/Header";
 
 type PreviewPropsType = {
     title: string
@@ -11,27 +14,23 @@ type PreviewPropsType = {
 }
 
 export const Preview = (props: PreviewPropsType) => {
-
-    const classForPreviewBlock = props.isHeader ? styles.previewBlockWithHeader : styles.previewBlock
-
     return (
         <div className={styles.previewWrapper}>
-            {
-                props.isHeader && props.header
-                && <div className={styles.headerElStyle}>
-                    <span>{props.header}</span>
-                </div>
-            }
-            <div className={classForPreviewBlock}>
-                <h3>{props.title}</h3>
-                <p>{props.postText}</p>
-                {
-                    props.isImage && props.image
-                    && <div className={styles.imageWrapper}>
-                        <img className={styles.uploadedImage} src={props.image} alt='uploaded img'/>
-                    </div>
-                }
-            </div>
+            <Header header={props.header}
+                    isHeader={props.isHeader}
+            />
+            <UploadedImage image={props.image}
+                           isImage={props.isImage}
+                           header={props.header}
+                           isHeader={props.isHeader}
+            />
+            <PreviewInfo title={props.title}
+                         postText={props.postText}
+                         image={props.image}
+                         isImage={props.isImage}
+                         header={props.header}
+                         isHeader={props.isHeader}
+            />
         </div>
     );
 };

@@ -1,0 +1,20 @@
+.imageWrapper {
+    width: 90%;
+    display: flex;
+    justify-content: center;
+    background-size: cover;
+    overflow: hidden;
+    border-radius: 5px 5px 0 0;
+}
+.imageWrapperWithActiveHeader {
+    width: 90%;
+    display: flex;
+    justify-content: center;
+    background-size: cover;
+    overflow: hidden;
+}
+
+.uploadedImage {
+    object-fit: cover;
+    width: 100%;
+}
