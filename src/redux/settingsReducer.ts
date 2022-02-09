@@ -9,9 +9,9 @@ export type DataType = {
 }
 
 let initialState: DataType = {
-    title: '',
-    postText: '',
-    header: '',
+    title: 'Title',
+    postText: 'Some post text',
+    header: 'Header',
     image: '',
     isHeader: false,
     isImage: false,
@@ -151,7 +151,7 @@ export const setDataFromLocalStorageAC = (dataFromLS: DataType): getDataFromLoca
 }
 
 export type resetDataACType = {
-    type:'RESET-DATA',
+    type: 'RESET-DATA',
 }
 export const resetDataAC = (): resetDataACType => {
     return {
