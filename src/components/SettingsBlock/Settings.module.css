@@ -57,3 +57,11 @@
     border: 3px dashed #1975D1;
     border-radius: 5px;
 }
+
+.buttonsBlock {
+    display: flex;
+}
+
+.buttonsBlock button {
+    margin-right: 15px
+}

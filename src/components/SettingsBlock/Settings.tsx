@@ -7,7 +7,7 @@ import {
     changeImageValueAC,
     changePostTextValueAC,
     changeTitleAC,
-    DataType, toggleDragAC,
+    DataType, resetDataAC, toggleDragAC,
     toggleHeaderCheckboxAC,
     toggleImageCheckboxAC
 } from "../../redux/settingsReducer";
@@ -61,6 +61,7 @@ export const Settings = (props: SettingsPropsType) => {
     const saveData = () => {
         localStorage.setItem('data', JSON.stringify(props.allData))
     }
+    const resetData = () => dispatch(resetDataAC())
 
     return (
         <div className={styles.settingsWrapper}>
@@ -116,8 +117,14 @@ export const Settings = (props: SettingsPropsType) => {
                         </div>
                     }
                 </div>}
-                <div>
+                <div className={styles.buttonsBlock}>
                     {useAlert('Post saved', saveData)} {/*вызов хука useAlert. В нем же кнопка SAVE.*/}
+                    <Button variant="contained"
+                            onClick={resetData}
+                            style={{marginTop: '20px'}}
+                    >
+                        Reset
+                    </Button>
                 </div>
             </div>
         </div>

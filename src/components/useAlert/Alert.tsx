@@ -7,7 +7,7 @@ type AlertPropsType = {
     alertY: number
 }
 
-const Alert = (props: AlertPropsType) => {
+export const Alert = (props: AlertPropsType) => {
     const alert = useRef<HTMLDivElement | null>(null);
 
     useEffect(() => {
@@ -24,4 +24,3 @@ const Alert = (props: AlertPropsType) => {
     );
 };
 
-export default Alert;

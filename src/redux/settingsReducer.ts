@@ -9,9 +9,9 @@ export type DataType = {
 }
 
 let initialState: DataType = {
-    title: 'Title',
-    postText: 'Some post text',
-    header: 'Header',
+    title: '',
+    postText: '',
+    header: '',
     image: '',
     isHeader: false,
     isImage: false,
@@ -44,6 +44,15 @@ export const SettingsReducer = (state: DataType = initialState, action: ActionsT
         case 'SET-DATA-FROM-LOCALSTORAGE': {
             return {...state = action.dataFromLS}
         }
+        case 'RESET-DATA': {
+            return {
+                ...state,
+                title: '',
+                postText: '',
+                header: '',
+                image: '',
+            }
+        }
         default:
             return state;
     }
@@ -57,6 +66,7 @@ type ActionsType =
     | changeImageValueACType
     | getDataFromLocalStorageACType
     | toggleDragACType
+    | resetDataACType
 
 export type changeTitleACType = {
     type: 'CHANGE-TITLE-VALUE',
@@ -137,5 +147,14 @@ export const setDataFromLocalStorageAC = (dataFromLS: DataType): getDataFromLoca
     return {
         type: 'SET-DATA-FROM-LOCALSTORAGE',
         dataFromLS
+    } as const
+}
+
+export type resetDataACType = {
+    type:'RESET-DATA',
+}
+export const resetDataAC = (): resetDataACType => {
+    return {
+        type: 'RESET-DATA',
     } as const
 }

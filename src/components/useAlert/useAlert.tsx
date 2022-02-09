@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import Alert from "./Alert";
+import {Alert} from "./Alert";
 import {Button} from "@mui/material";
 
 export const useAlert = (alertMessage: string, saveData: () => void) => {
