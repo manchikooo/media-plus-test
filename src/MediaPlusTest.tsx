@@ -39,10 +39,10 @@ const MediaPlusTest = () => {
                     </div>}
                 <div className={classForPreviewBlock}>
                     <h3>{title}</h3>
-                    <span>{postText}</span>
+                    <p>{postText}</p>
                     {isImage && image
                         && <div className={styles.imageWrapper}>
-                            <img className={styles.uploadedImage} src={image} alt='uploaded img'/>
+                            <img className={styles.uploadedImage}  src={image} alt='uploaded img'/>
                         </div>
                     }
                 </div>

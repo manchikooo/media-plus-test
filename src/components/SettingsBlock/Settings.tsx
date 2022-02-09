@@ -99,6 +99,7 @@ export const Settings = (props: SettingsPropsType) => {
                             type="file"
                             hidden
                             onChange={imageValueHandler}
+                            accept='image/'
                         />
                     </Button>
                     {props.isDrag
