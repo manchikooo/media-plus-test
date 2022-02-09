@@ -86,13 +86,20 @@
     display: flex;
     justify-content: center;
     background-size: cover;
-
-    /*width: 100%;*/
-
 }
 
 .uploadedImage {
     object-fit: cover;
     width: 100%;
-    /*width: 300px;*/
+}
+
+@media screen and (max-width: 500px) {
+    .MediaPlusTestPageStyle {
+        flex-direction: column;
+    }
+}
+@media screen and (max-width: 500px) {
+    .previewWrapper {
+        width: 100%;
+    }
 }
