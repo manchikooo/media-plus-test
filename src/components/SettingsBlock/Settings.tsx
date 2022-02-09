@@ -13,6 +13,8 @@ import {
 } from "../../redux/settingsReducer";
 import {useDispatch} from "react-redux";
 import {useAlert} from "../useAlert/useAlert";
+import {LogicOfHeaderToggle} from "./LogicOfHeaderToggle/LogicOfHeaderToggle";
+import {LogicOfImageToggle} from "./LogicOfImageToggle/LogicOfImageToggle";
 
 type SettingsPropsType = {
     allData: DataType
@@ -33,31 +35,7 @@ export const Settings = (props: SettingsPropsType) => {
     const postTextValueHandler = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
         dispatch(changePostTextValueAC(e.currentTarget.value))
     }
-    const headerValueHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-        dispatch(changeHeaderValueAC(e.currentTarget.value))
-    }
-    const imageValueHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-        dispatch(changeImageValueAC(URL.createObjectURL(e.target.files![0])))
-    }
-    const toggleHeaderCheckbox = () => {
-        dispatch(toggleHeaderCheckboxAC())
-    }
-    const toggleImageCheckbox = () => {
-        dispatch(toggleImageCheckboxAC())
-    }
-    const toggleDragStartAndOverValue = (e: React.DragEvent<HTMLDivElement>) => {
-        e.preventDefault()
-        dispatch(toggleDragAC(true))
-    }
-    const toggleDragLeaveValue = (e: React.DragEvent<HTMLDivElement>) => {
-        e.preventDefault()
-        dispatch(toggleDragAC(false))
-    }
-    const onDropHandler = (e: React.DragEvent<HTMLDivElement>) => {
-        e.preventDefault()
-        dispatch(changeImageValueAC(URL.createObjectURL(e.dataTransfer.files![0])))
-        dispatch(toggleDragAC(false))
-    }
+
     const saveData = () => {
         localStorage.setItem('data', JSON.stringify(props.allData))
     }
@@ -75,49 +53,8 @@ export const Settings = (props: SettingsPropsType) => {
                           placeholder='Some post text'
                           value={props.postText}
                           onChange={postTextValueHandler}/>
-                <div>
-                    <Switch checked={props.isHeader} onChange={toggleHeaderCheckbox}/>
-                    <span>Header</span>
-                </div>
-                {props.isHeader && <InputForm placeholder='Header'
-                                              value={props.header}
-                                              onChange={headerValueHandler}
-                />}
-                <div>
-                    <Switch checked={props.isImage} onChange={toggleImageCheckbox}/>
-                    <span>Image</span>
-                </div>
-                {props.isImage && <div className={styles.dropAreaBlock}>
-                    <Button
-                        variant="contained"
-                        component="label"
-                        style={{marginBottom: '15px'}}
-                        size='small'
-                    >
-                        Upload File
-                        <input
-                            type="file"
-                            hidden
-                            onChange={imageValueHandler}
-                            accept='image/'
-                        />
-                    </Button>
-                    {props.isDrag
-                        ? <div className={styles.dropArea}
-                               onDragStart={toggleDragStartAndOverValue}
-                               onDragLeave={toggleDragLeaveValue}
-                               onDragOver={toggleDragStartAndOverValue}
-                               onDrop={onDropHandler}
-                        >Release the files to download them
-                        </div>
-                        : <div className={styles.dropArea}
-                               onDragStart={toggleDragStartAndOverValue}
-                               onDragLeave={toggleDragLeaveValue}
-                               onDragOver={toggleDragStartAndOverValue}
-                        >Drag and drop files to upload them
-                        </div>
-                    }
-                </div>}
+                <LogicOfHeaderToggle header={props.header} isHeader={props.isHeader}/>
+                <LogicOfImageToggle isImage={props.isImage} isDrag={props.isDrag}/>
                 <div className={styles.buttonsBlock}>
                     {useAlert('Post saved', saveData)} {/*вызов хука useAlert. В нем же кнопка SAVE.*/}
                     <Button variant="contained"

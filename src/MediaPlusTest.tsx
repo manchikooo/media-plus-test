@@ -4,8 +4,9 @@ import {useDispatch, useSelector} from "react-redux";
 import {DataType, setDataFromLocalStorageAC} from "./redux/settingsReducer";
 import {AppRootStateType} from "./redux/store";
 import {Settings} from "./components/SettingsBlock/Settings";
+import {Preview} from "./components/Preview/Preview";
 
-const MediaPlusTest = () => {
+export const MediaPlusTest = () => {
     const dispatch = useDispatch()
 
     const allData = useSelector<AppRootStateType, DataType>(state => state.settings)
@@ -18,10 +19,6 @@ const MediaPlusTest = () => {
         }
     }, [])
 
-    const classForPreviewBlock = isHeader ? styles.previewBlockWithHeader : styles.previewBlock
-
-    // accept=".jpg, .jpeg, .png"
-
     return (
         <div className={styles.MediaPlusTestPageStyle}>
             <Settings allData={allData}
@@ -32,23 +29,14 @@ const MediaPlusTest = () => {
                       isImage={isImage}
                       isDrag={isDrag}
             />
-            <div className={styles.previewWrapper}>
-                {isHeader && header
-                    && <div className={styles.headerElStyle}>
-                        <span>{header}</span>
-                    </div>}
-                <div className={classForPreviewBlock}>
-                    <h3>{title}</h3>
-                    <p>{postText}</p>
-                    {isImage && image
-                        && <div className={styles.imageWrapper}>
-                            <img className={styles.uploadedImage}  src={image} alt='uploaded img'/>
-                        </div>
-                    }
-                </div>
-            </div>
+            <Preview title={title}
+                     postText={postText}
+                     header={header}
+                     image={image}
+                     isHeader={isHeader}
+                     isImage={isImage}
+            />
         </div>
     );
 }
 
-export default MediaPlusTest;
